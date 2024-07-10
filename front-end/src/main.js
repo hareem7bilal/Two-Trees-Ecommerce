@@ -36,7 +36,7 @@ createApp(App)
     },
     {
         path: '/',
-        component: ProductsPage
+        redirect: '/products'
     },
     {
         path: '/products/:productId',
