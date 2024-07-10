@@ -23,6 +23,12 @@ async function start() {
   }
 
   app.use("/images", express.static(assetsPath));
+  app.use(
+    express.static(path.resolve(__dirname, "../dist"), {
+      maxAge: "1y",
+      etag: false,
+    })
+  );
 
   await client.connect();
   const db = client.db("fsv-db");
@@ -95,8 +101,14 @@ async function start() {
     res.json(populatedCart);
   });
 
-  app.listen(8000, () => {
-    console.log("Server is listening on port 8000");
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  });
+
+  const port = process.env.PORT || 8000;
+
+  app.listen(port, () => {
+    console.log("Server is listening on port "+port);
   });
 }
 
