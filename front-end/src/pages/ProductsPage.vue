@@ -4,7 +4,8 @@
 </template>
 
 <script>
-import { products } from '@/temp-data';
+//import { products } from '@/temp-data';
+import axios from 'axios';
 import ProductsList from '../components/ProductsList.vue';
 
 export default {
@@ -14,8 +15,13 @@ export default {
     },
     data() {
         return {
-            products,
+            products: [],
         }
+    },
+    async created(){
+        const res = await axios.get('/api/products');
+        const products = res.data;
+        this.products = products;
     }
 }
 </script>
